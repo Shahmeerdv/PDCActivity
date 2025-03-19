@@ -6,6 +6,7 @@
 #define N 500
 #define M 500
 #define P 500
+#define NUM_THREADS 12  // Define the number of threads globally
 
 void initializeMatrix(int matrix[N][M]) {
     for (int i = 0; i < N; i++) {
@@ -34,11 +35,13 @@ int main() {
     initializeMatrix(A);
     initializeMatrix(B);
 
+    omp_set_num_threads(NUM_THREADS);  // Set the number of threads explicitly
+
     double start = omp_get_wtime();
     matrixMultiplyParallel(A, B, C);
     double end = omp_get_wtime();
 
-    printf("Parallel Execution Time: %f seconds\n", end - start);
+    printf("Parallel Execution Time with %d threads: %f seconds\n", NUM_THREADS, end - start);
 
     return 0;
 }
