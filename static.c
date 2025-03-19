@@ -6,6 +6,7 @@
 #define N 500
 #define M 500
 #define P 500
+#define NUM_THREADS 8  // Define number of threads
 
 void initializeMatrix(int matrix[N][M]) {
     for (int i = 0; i < N; i++) {
@@ -34,11 +35,14 @@ int main() {
     initializeMatrix(A);
     initializeMatrix(B);
 
+    omp_set_num_threads(NUM_THREADS);  // Set OpenMP to use 12 threads
+
     double start = omp_get_wtime();
     matrixMultiplyStatic(A, B, C);
     double end = omp_get_wtime();
 
-    printf("Static Scheduling Execution Time: %f seconds\n", end - start);
+    printf("Static Scheduling Execution Time for 12 threads %f seconds\n", end - start);
+  //  printf("Number of threads used: %d\n", NUM_THREADS);  // Print number of threads
 
     return 0;
 }
